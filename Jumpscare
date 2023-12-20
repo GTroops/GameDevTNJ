@@ -1,0 +1,65 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+
+public class TimerController : MonoBehaviour
+{
+   public float StartTime;
+   private float TimeLeft;
+
+
+   public TMP_Text TimerText;
+   public Button StartButton;
+   public GameObject jumpscareObject;
+   public GameObject timerObject;
+   [SerializeField] private bool isButton = false;
+
+void Start()
+{
+    TimeLeft = StartTime;
+}
+
+void Update()
+{
+    if(!isButton)
+    {
+        Countdown();
+    }
+    else{}
+}
+
+   // Update is called once per frame
+   void Countdown()
+   {
+       if(TimeLeft > 0)
+       {
+           TimeLeft -= Time.deltaTime;
+           int minutes = Mathf.FloorToInt(TimeLeft / 60);
+           int seconds = Mathf.FloorToInt(TimeLeft % 60);
+
+           string minutesString = minutes.ToString("00");
+           string secondsString = seconds.ToString("00");
+           TimerText.text = minutesString + ":" + secondsString;
+       }
+       else
+       {
+           StartButton.gameObject.SetActive(true);
+           TimerText.gameObject.SetActive(false);
+           jumpscareObject.SetActive(true);
+       }
+   }
+
+
+
+
+   public void StartClicked()
+   {
+       TimeLeft = StartTime;
+       timerObject.SetActive(true);
+       TimerText.gameObject.SetActive(true);
+       StartButton.gameObject.SetActive(false);
+   }
+}
